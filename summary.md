@@ -159,6 +159,195 @@ void  stop（）
   digitalWrite（10，LOW）;
 }
 ```
-
+数码管的设计与原理和实验
 
 ## 第四天
+
+	学习了GitHub客户端与网页端的数据传送与交流；完成了网页版的morse电码
+```c
+int _pin=13;
+int _dottime=250;
+
+#ifndef _MORSE_H
+#define _MORSE_H
+class Morse
+{
+  public:
+    Morse(int pin);
+    void dot();
+    void dash();
+    void c_space();
+    void w_space();
+  private:
+    int _pin;
+    int _dottime;
+};
+#endif /*_MORSE_H*/
+
+#include "Arduino.h"
+#include "Morse.h"
+
+Morse::Morse(int pin)
+{
+  pinMode(pin,OUTPUT);
+  _pin=pin;
+  _dottime=250;
+}
+
+ 
+void Morse::dot()
+{
+  digitalWrite(_pin,HIGH);
+  delay(_dottime);
+  digitalWrite(_pin,LOW);
+  delay(_dottime);
+}
+
+void Morse::dash()
+{
+  digitalWrite(_pin,HIGH);
+  delay(_dottime*4);
+  digitalWrite(_pin,LOW);
+  delay(_dottime);
+}
+
+void Morse::c_space()
+{
+  digitalWrite(_pin,LOW);
+  delay(_dottime*3);
+}
+
+void Morse::w_space()
+{
+  digitalWrite(_pin,LOW);
+  delay(_dottime*7);
+}
+
+int incomingByte = 0;
+ 
+void setup()
+{
+  pinMode(_pin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop(){
+  if(Serial.available() > 0){
+    incomingByte = Serial.read();
+    switch(incomingByte){
+      case 97:dot();
+              dash();
+              c_space();break;
+      case 98:dash();
+              dot();
+              dot();
+              dot();
+              c_space();break;
+      case 99:dash();
+              dot();
+              dash();
+              dot();
+              c_space();break;
+      case 100:dash();
+               dot();
+               dot();
+               c_space();break;
+      case 101:dot();
+               c_space();break;
+      case 102:dot();
+               dot();
+               dash();
+               dot();
+               c_space();break;
+      case 103:dash();
+               dash();
+               dot();
+               c_space();break;
+      case 104:dot();
+               dot();
+               dot();
+               dot();
+               c_space();break;
+      case 105:dot();
+               dot();
+               c_space();break;
+      case 106:dot();
+               dash();
+               dash();
+               dash();
+               c_space();break;
+      case 107:dash();
+               dot();
+               dash();
+               c_space();break;
+      case 108:dot();
+               dash();
+               dot();
+               dot();
+               c_space();break;
+      case 109:dash();
+               dash();
+               c_space();break;
+      case 110:dash();
+               dot();
+               c_space();break;
+      case 111:dash();
+               dash();
+               dash();
+               c_space();break;
+      case 112:dot();
+               dash();
+               dash();
+               dot();
+               c_space();break;
+      case 113:dash();
+               dash();
+               Mdot();
+               dash();
+               c_space();break;
+      case 114:dot();
+               dash();
+               dot();
+               c_space();break;
+      case 115:dot();
+               dot();
+               dot();
+               c_space();break;
+      case 116:dash();
+               c_space();break;
+      case 117:dot();
+               dot();
+               dash();
+               c_space();break;
+      case 118:dot();
+               dot();
+               dot();
+               dash();
+               c_space();break;
+      case 119:dot();
+               dash();
+               dash();
+               c_space();break;
+      case 120:dash();
+               dot();
+               dot();
+               dash();
+               c_space();break;
+      case 121:dash();
+               dot();
+               dash();
+               dash();
+               c_space();break;
+      case 122:dash();
+               dash();
+               dot();
+               dot();
+               c_space();break;
+      case 32: w_space();
+    }
+  }
+}
+```
+## 心得
+学会了怎样使用GitHub，怎样与全球的写代码的工作者进行交流。了解了arduino，fritzing，processing等软件，在makercad上面进行模拟电路实验，制作有趣的小东西，开发我们的思维。
+
